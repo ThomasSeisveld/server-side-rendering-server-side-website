@@ -1,20 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <nav>
-        <ul>
-            <li class="{% if menuClass == 'home' %}active{% endif %}">
-                Home
-            </li>
-            <li class="{% if menuClass == 'gitaar' %}active{% endif %}">
-                Gitaar
-            </li>
-        </ul>
-    </nav>
-</body>
-</html>
+{% render 'partials/head.liquid', title: title %}
+{% comment %} <nav>
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/overzicht">Overzicht</a></li>
+    <li><a href="/add">Instrument toevoegen</a></li>
+  </ul>
+</nav> {% endcomment %}
+
+{%  render 'partials/foot.liquid' %}

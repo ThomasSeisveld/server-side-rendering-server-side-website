@@ -1,0 +1,167 @@
+@font-face {
+    font-family: 'Akkurat';
+    src: url('/fonts/akkurat-light.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Akkurat';
+    src: url('/fonts/akkurat-regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Akkurat';
+    src: url('/fonts/akkurat-bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+}
+
+
+@font-face {
+    font-family: 'Feijoa';
+    src: url('/fonts/feijoa-regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Feijoa';
+    src: url('/fonts/feijoa-bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+ul,
+ol {
+    list-style: none; 
+}
+
+a {
+    color: inherit; 
+}
+
+:root{
+    --color-primary: #46166b;
+
+    --color-neutral-900: #000000;
+    --color-neutral-800: #212121;
+    --color-neutral-300: #d9d9d9;
+    --color-neutral-100: #f2f2f2;
+    --color-neutral-0:   #ffffff;
+
+    --color-accent-1: #d09910;
+    --color-accent-2: #f37021;
+    --color-accent-3: #71cbc2;
+    --color-accent-4: #f04e63;
+
+    --color-accent-1-st: #b3840d;
+    --color-accent-2-strong: #d3601a;
+    --color-accent-3-strong: #378e95;
+    --color-accent-4-strong: #dc4054;
+
+    --color-status-available: #11A407; 
+    --color-status-borrowed: #FF0000; 
+    --color-status-repair: #FFBB00; 
+}
+
+
+body{
+    font-family: "Akkurat",sans-serif;
+    font-size: 1em;
+    font-weight: 400;
+    line-height: 1.5
+}
+
+h1{
+    font-family: "Feijoa",serif;
+    font-size: clamp(2rem,.9830508475rem + 2.1186440678vw,2.625rem);
+    line-height: 1.2;
+    font-weight: 400;
+    margin: 0 0 .9375rem;
+}
+
+h2{
+    font-family: "Feijoa",serif;
+    margin: 0 0 .625rem;
+    font-size: clamp(1.5rem,.686440678rem + 1.6949152542vw,2rem);
+    line-height: 1.2;
+}
+
+h3{
+    font-family: "Akkurat",sans-serif;
+    font-size: clamp(1.5rem,.686440678rem + 1.6949152542vw,2rem);
+    margin: 0 0 .2em;
+    font-family: Feijoa,serif;
+    line-height: 1.5; 
+}
+
+h4{
+    font-family: "Akkurat",sans-serif;
+    font-size: clamp(1.25rem,.843220339rem + .8474576271vw,1.5rem);
+    font-weight: 700;
+    line-height: 1.2;
+    margin: 0 0 .5rem;
+}
+
+p{
+    font-family: "Akkurat",sans-serif;
+    font-size: clamp(1.25rem,.843220339rem + .8474576271vw,1.5rem);
+    font-weight: 300;
+    line-height: 1.6;
+    margin: 0 0 1em;
+}
+
+.search-bar{
+    display: flex;
+    input{
+        border: 0.07rem solid var(--color-primary);
+        border-top-left-radius: 0.375rem;
+        border-bottom-left-radius: 0.375rem;
+        border-bottom-right-radius: 0;
+        border-top-right-radius: 0;
+        padding: calc(.5em - 1px) calc(.75em - 1px);
+    }
+
+    button{
+        background-color: var(--color-primary);
+        color: var(--color-neutral-0);
+        padding: 0.69em 1em 0.69em;
+        border: 0.07rem solid var(--color-primary);
+        border-top-right-radius: 0.375rem;
+        border-bottom-right-radius: 0.375rem;
+        border-bottom-left-radius: 0;
+        border-top-left-radius: 0;
+        margin-left: -1px;
+        position: relative;
+
+        &::before{
+            content: "";
+            width: 1rem;
+            height: 1rem;
+            background-image: url('/icons/search.svg');
+            color: var(--color-neutral-0);
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: contain;
+            position: absolute;
+            left: 0.5em; 
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        &:hover{
+            background-color: var(--color-accent-3);
+            color: var(--color-neutral-900);
+        }
+    }
+
+}

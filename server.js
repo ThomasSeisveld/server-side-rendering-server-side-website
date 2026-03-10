@@ -17,39 +17,63 @@ console.log('Hieronder moet je waarschijnlijk nog wat veranderen')
 // (Let op: dit is _niet_ de console van je browser, maar van NodeJS, in je terminal)
 // console.log(apiResponseJSON)
 
-
-// Maak een nieuwe Express applicatie aan, waarin we de server configureren
 const app = express()
 
-// Maak werken met data uit formulieren iets prettiger
 app.use(express.urlencoded({extended: true}))
-
-// Gebruik de map 'public' voor statische bestanden (resources zoals CSS, JavaScript, afbeeldingen en fonts)
-// Bestanden in deze map kunnen dus door de browser gebruikt worden
 app.use(express.static('public'))
 
-// Stel Liquid in als 'view engine'
 const engine = new Liquid();
 app.engine('liquid', engine.express()); 
 
-// Stel de map met Liquid templates in
-// Let op: de browser kan deze bestanden niet rechtstreeks laden (zoals voorheen met HTML bestanden)
 app.set('views', './views')
 
-// Maak een GET route voor de index (meestal doe je dit in de root, als /)
+async function haalDataVanDirectus(endpoint, params = {}) {
+  const url = 'https://fdnd-agency.directus.app/items/' + endpoint + '?' + new URLSearchParams(params);
+  const response = await fetch(url);
+  const json = await response.json();
+  return json.data;
+}
+// data ophalen uit directus en omzetten naar json 
+
+// endpoint                -> de collectie in directus ophalen
+// params                  -> eventuele filters sortering
+// fetch(url)              -> vraagt de data op bij directus via http
+// await response.json()   -> zet om naar json
+// return json.data        -> je krijgt een array van items die in routes gebruikt kunnen worden en naar liquid kan sturen
+
+
+// Routes
 app.get('/', async function (request, response) {
    // Render index.liquid uit de Views map
    // Geef hier eventueel data aan mee
-   response.render('index.liquid', { menuClass: 'home' })
-})
-app.get('/gitaar', async function (request, response,) {
-   // Render index.liquid uit de Views map
-   // Geef hier eventueel data aan mee\
-   
-   response.render('index.liquid', { menuClass: 'gitaar', path: request.path })
-})
-// Maak een POST route voor de index; hiermee kun je bijvoorbeeld formulieren afvangen
-// Hier doen we nu nog niets mee, maar je kunt er mee spelen als je wilt
+  response.render('index.liquid', { title: 'Home', menuClass: 'home' });
+});
+
+app.get('/instruments', async function (request, response) {
+  const type = request.query.type;
+  const status = request.query.status;
+  // TODO: je data voor filteren/sorteren doorgeven en combi
+
+  const instruments = await haalDataVanDirectus('preludefonds_instruments');
+  
+  response.render('instruments_overview.liquid', {
+    menuClass: 'overzicht',
+    instruments,
+    type,
+    status
+  });
+});
+
+app.get('/instruments/new', async function (request, response) {
+  response.render('instrument_add.liquid', { menuClass: 'add' });
+});
+
+app.get('/instruments/:id', async function (request, response) {
+  // TODO: data ophalen voor het specifieke instrument
+  const instrument = await haalDataVanDirectus('preludefonds_instruments/' + request.params.id);
+  response.render('instrument_detail.liquid',  { instrument, menuClass: 'detail' });
+});
+
 app.post('/', async function (request, response) {
   // Je zou hier data kunnen opslaan, of veranderen, of wat je maar wilt
   // Er is nog geen afhandeling van een POST, dus stuur de bezoeker terug naar /

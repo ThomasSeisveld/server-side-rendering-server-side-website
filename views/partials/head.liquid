@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../stylesheet.css">
+    <link rel="stylesheet" href="../style.css">
+    <title>{{ title | default: "PreludeFonds" }}</title>
+</head>
+<body>
+    <header>
+        <nav>
+        <ul>
+            <li class="{% if menuClass == 'home' %}active{% endif %}">
+               <a href="/">Home</a>
+            </li>
+            <li class="{% if menuClass == 'overzicht' or menuClass == 'detail' %}active{% endif %}">
+                <a href="/instruments">Overzicht</a>
+            </li>
+            <li class="{% if menuClass == 'add' %}active{% endif %}">
+                <a href="/instruments/new">Instrument toevoegen</a>
+            </li>
+        </ul>
+    </nav>
+    </header>
+    
