@@ -1,0 +1,36 @@
+{% render 'partials/head.liquid', title: 'Overzicht Instrumenten' %}
+
+<main>
+  <section class="overview">
+    <h1>Overzicht Instrumenten</h1>
+    
+    {% if instruments.size > 0 %}
+      <table class="instruments-table">
+        <thead>
+          <tr>
+            <th>Naam</th>
+            <th>Type</th>
+            <th>Status</th>
+            <th>Actie</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for instrument in instruments %}
+            <tr>
+              <td>{{ instrument.name }}</td>
+              <td>{{ instrument.type }}</td>
+              <td>{{ instrument.status }}</td>
+              <td>
+                <a href="/instruments/{{ instrument.id }}">Bekijken</a>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p>Geen instrumenten gevonden.</p>
+    {% endif %}
+  </section>
+</main>
+
+{% render 'partials/foot.liquid' %}

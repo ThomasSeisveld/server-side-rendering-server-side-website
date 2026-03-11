@@ -27,7 +27,7 @@ app.engine('liquid', engine.express());
 
 app.set('views', './views')
 
-async function haalDataVanDirectus(endpoint, params = {}) {
+async function reqDATA(endpoint, params = {}) {
   const url = 'https://fdnd-agency.directus.app/items/' + endpoint + '?' + new URLSearchParams(params);
   const response = await fetch(url);
   const json = await response.json();
@@ -54,9 +54,9 @@ app.get('/instruments', async function (request, response) {
   const status = request.query.status;
   // TODO: je data voor filteren/sorteren doorgeven en combi
 
-  const instruments = await haalDataVanDirectus('preludefonds_instruments');
+  const instruments = await reqDATA('preludefonds_instruments');
   
-  response.render('instruments_overview.liquid', {
+  response.render('overzicht.liquid', {
     menuClass: 'overzicht',
     instruments,
     type,
@@ -64,13 +64,13 @@ app.get('/instruments', async function (request, response) {
   });
 });
 
-app.get('/instruments/new', async function (request, response) {
+app.get('/new', async function (request, response) {
   response.render('instrument_add.liquid', { menuClass: 'add' });
 });
 
 app.get('/instruments/:id', async function (request, response) {
   // TODO: data ophalen voor het specifieke instrument
-  const instrument = await haalDataVanDirectus('preludefonds_instruments/' + request.params.id);
+  const instrument = await reqDATA('preludefonds_instruments/' + request.params.id);
   response.render('instrument_detail.liquid',  { instrument, menuClass: 'detail' });
 });
 
