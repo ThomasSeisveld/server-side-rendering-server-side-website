@@ -1,0 +1,302 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f8f9fa;
+}
+
+/* ------------ Main content -------------------*/
+main {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* ------------ Form styling -------------------*/
+.form-container {
+    background: var(--color-neutral-0);
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.form-container h1 {
+    color: var(--color-primary);
+    margin-bottom: 1.5rem;
+    font-size: 1.75rem;
+}
+
+fieldset {
+    border: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+legend {
+    font-weight: 600;
+    color: var(--color-primary);
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+}
+
+label {
+    font-weight: 500;
+    color: #555;
+    margin-bottom: 0.25rem;
+}
+
+input[type="text"],
+textarea,
+select {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: inherit;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+input[type="text"]:focus,
+textarea:focus,
+select:focus {
+    outline: none;
+    border-color: #B295C6;
+    box-shadow: 0 0 0 3px rgba(178, 149, 198, 0.2);
+}
+
+textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #eee;
+}
+
+/* ------------ Buttons -------------------*/
+.btn {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1rem;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+}
+
+.btn-primary {
+    background-color: #46166B;
+    color: #fff;
+}
+
+.btn-primary:hover {
+    box-shadow: 0 4px 15px rgba(70, 22, 107, 0.3);
+}
+
+.btn-secondary {
+    background-color: #e0e0e0;
+    color: #333;
+}
+
+.btn-secondary:hover {
+    background-color: #d0d0d0;
+}
+
+/* ------------ Instrument detail pagina -------------------*/
+.instrument-detail {
+    background: var(--color-neutral-0);
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.instrument-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.instrument-header h1 {
+    color: #46166B;
+    font-size: 2rem;
+}
+
+.status {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.875rem;
+    text-transform: capitalize;
+}
+
+.status-beschikbaar {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.status-uitgeleend {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.status-onbekend {
+    background-color: #e2e3e5;
+    color: #6c757d;
+}
+
+.status-onder-onderhoud,
+.status-onder_onderhoud {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.instrument-image {
+    margin: 0 0 2rem 0;
+    text-align: center;
+}
+
+.instrument-image img {
+    max-width: 100%;
+    max-height: 400px;
+    border-radius: 8px;
+    object-fit: contain;
+}
+
+.instrument-info h2 {
+    color: var(--color-primary);
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--color-secondary);
+}
+
+dl {
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    gap: 0.75rem 1rem;
+}
+
+dt {
+    font-weight: 600;
+    color: #555;
+}
+
+dd {
+    color: #333;
+}
+
+.instrument-actions {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #eee;
+}
+
+/* ------------ Responsive -------------------*/
+@media (max-width: 600px) {
+    dl {
+        grid-template-columns: 1fr;
+    }
+    
+    dt {
+        margin-bottom: 0.25rem;
+    }
+    
+    dd {
+        margin-bottom: 1rem;
+    }
+    
+    .form-actions {
+        flex-direction: column;
+    }
+    
+    .btn {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+/* ------------ Overzicht tabel -------------------*/
+.overview {
+    background: var(--color-neutral-0);
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.overview h1 {
+    color: var(--color-primary);
+    margin-bottom: 1.5rem;
+}
+
+.instruments-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.instruments-table th,
+.instruments-table td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+
+.instruments-table th {
+    background-color: var(--color-primary);
+    color: #fff;
+    font-weight: 600;
+}
+
+.instruments-table th:first-child {
+    border-radius: 8px 0 0 0;
+}
+
+.instruments-table th:last-child {
+    border-radius: 0 8px 0 0;
+}
+
+.instruments-table tbody tr:hover {
+    background-color: #f8f4fa;
+}
+
+.instruments-table .btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+}
+
+.load-more {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+    padding-top: 1rem;
+}
+
+.load-more .btn {
+    padding: 0.75rem 2rem;
+}
