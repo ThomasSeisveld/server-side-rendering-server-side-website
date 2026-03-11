@@ -1,0 +1,38 @@
+{% render 'partials/head.liquid', title: instrument.name, menuClass: menuClass %}
+<main>
+    <article class="instrument-detail">
+        <header class="instrument-header">
+            <h1>{{ instrument.name }}</h1>
+            <span class="status status-{{ instrument.status | downcase | replace: ' ', '-' }}">
+                {{ instrument.status }}
+            </span>
+        </header>
+
+        <figure class="instrument-image">
+            {% if instrument.photos %}
+            <img src="{{ instrument.photos[0] }}" alt="{{ instrument.name }}">
+            {% else %}
+            <img src="/icons/logo.svg" alt="Geen afbeelding beschikbaar">
+            {% endif %}
+        </figure>
+
+        <section class="instrument-info">
+            <h2>Details</h2>
+            <dl>
+                <dt>Type</dt>
+                <dd>{{ instrument.instrument | default: 'Onbekend' }}</dd>
+
+                <dt>Status</dt>
+                <dd>{{ instrument.status | default: 'Onbekend' }}</dd>
+
+                <dt>Datum toegevoegd</dt>
+                <dd>{{ instrument.date_created | date: '%d-%m-%Y' | default: 'Onbekend' }}</dd>
+            </dl>
+        </section>
+
+        <nav class="instrument-actions">
+            <a href="/instruments" class="btn btn-primary">← Terug naar overzicht</a>
+        </nav>
+    </article>
+</main>
+{% render 'partials/foot.liquid' %}
