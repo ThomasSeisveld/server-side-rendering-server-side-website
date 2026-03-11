@@ -1,4 +1,4 @@
-{% render 'partials/head.liquid', title: 'Overzicht Instrumenten' %}
+{% render 'partials/head.liquid', title: title, menuClass: menuClass %}
 
 <main>
   <section class="overview">
@@ -17,16 +17,28 @@
         <tbody>
           {% for instrument in instruments %}
             <tr>
-              <td>{{ instrument.name }}</td>
-              <td>{{ instrument.instrument | truncate: 12 }}</td>
-              <td>{{ instrument.status }}</td>
+              <td>{{ instrument.name | default: 'Onbekend' }}</td>
+              <td>{{ instrument.instrument | truncate: 20 | default: 'Onbekend' }}</td>
               <td>
-                <a href="/instruments/{{ instrument.id }}">Bekijken</a>
+                <span class="status status-{{ instrument.status | downcase | replace: ' ', '-' | default: 'onbekend' }}">
+                  {{ instrument.status | default: 'onbekend' }}
+                </span>
+              </td>
+              <td>
+                <a href="/instruments/{{ instrument.key }}" class="btn btn-primary">Bekijken</a>
               </td>
             </tr>
           {% endfor %}
         </tbody>
       </table>
+      
+      {% if hasMore %}
+        <footer class="load-more">
+          <a href="/instruments?limit=all" class="btn btn-secondary">
+            Laat alles zien ({{ totalCount }} instrumenten)
+          </a>
+        </footer>
+      {% endif %}
     {% else %}
       <p>Geen instrumenten gevonden.</p>
     {% endif %}
