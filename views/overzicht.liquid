@@ -9,7 +9,7 @@
         <thead>
           <tr>
             <th>Naam</th>
-            <th>Type</th>
+            <th>Instrument</th>
             <th>Status</th>
             <th>Actie</th>
           </tr>
@@ -18,7 +18,7 @@
           {% for instrument in instruments %}
             <tr>
               <td>{{ instrument.name }}</td>
-              <td>{{ instrument.type }}</td>
+              <td>{{ instrument.instrument | truncate: 12 }}</td>
               <td>{{ instrument.status }}</td>
               <td>
                 <a href="/instruments/{{ instrument.id }}">Bekijken</a>
