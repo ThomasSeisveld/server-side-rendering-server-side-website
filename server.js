@@ -52,29 +52,34 @@ app.get('/', async function (request, response) {
 app.get('/instruments', async function (request, response) {
   const type = request.query.type;
   const status = request.query.status;
-  // TODO: je data voor filteren/sorteren doorgeven en combi
-
-  const instruments = await reqDATA('preludefonds_instruments');
-  console.log(instruments);
   
+  const limitParam = request.query.limit;
+  const showAll = limitParam === 'all';
+  const limit = showAll ? Infinity : (parseInt(limitParam) || 10);
 
+  const allInstruments = await reqDATA('preludefonds_instruments');
+  const instruments = showAll ? allInstruments : allInstruments.slice(0, limit);
+  const hasMore = !showAll && allInstruments.length > limit;
+  const totalCount = allInstruments.length;
 
   response.render('overzicht.liquid', {
-    menuClass: 'overzicht',
     instruments,
     type,
-    status
+    status,
+    menuClass: 'overzicht',
+    hasMore,
+    totalCount
   });
 });
 
-app.get('/new', async function (request, response) {
-  response.render('instrument_add.liquid', { menuClass: 'add' });
+app.get('/instruments/new', async function (request, response) {
+  response.render('toevoegen.liquid', { menuClass: 'add', title: 'Instrument toevoegen' });
 });
 
-app.get('/instruments/:id', async function (request, response) {
-  // TODO: data ophalen voor het specifieke instrument
-  const instrument = await reqDATA('preludefonds_instruments/' + request.params.id);
-  response.render('instrument_detail.liquid',  { instrument, menuClass: 'detail' });
+app.get('/instruments/:key', async function (request, response) {
+  const instruments = await reqDATA('preludefonds_instruments', { 'filter[key][_eq]': request.params.key });
+  const instrument = instruments[0];
+  response.render('informatie.liquid',  { instrument, menuClass: 'overzicht' });
 });
 
 app.post('/', async function (request, response) {
