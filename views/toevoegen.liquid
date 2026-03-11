@@ -1,0 +1,36 @@
+{% render 'partials/head.liquid', title: title, menuClass: menuClass %}
+<main>
+  <article class="form-container">
+    <h1>Instrument toevoegen</h1>
+    <form action="/instruments" method="POST">
+      <fieldset>
+        <legend>Instrument gegevens</legend>
+        
+        <label for="name">Naam instrument</label>
+        <input type="text" id="name" name="name" placeholder="Bijv. Stradivarius Viool" required>
+        
+        <label for="type">Type instrument</label>
+        <select id="type" name="type" required>
+          <option value="">Selecteer een type</option>
+          <option value="snaarinstrument">Snaarinstrument</option>
+        </select>
+        
+        <label for="description">Beschrijving</label>
+        <textarea id="description" name="description" rows="4" placeholder="Beschrijf het instrument..."></textarea>
+        
+        <label for="status">Status</label>
+        <select id="status" name="status" required>
+          <option value="beschikbaar">Beschikbaar</option>
+          <option value="uitgeleend">Uitgeleend</option>
+          <option value="onder_onderhoud">Onder onderhoud</option>
+        </select>
+      </fieldset>
+      
+      <footer class="form-actions">
+        <a href="/instruments" class="btn btn-secondary">Annuleren</a>
+        <button type="submit" class="btn btn-primary">Toevoegen</button>
+      </footer>
+    </form>
+  </article>
+</main>
+{% render 'partials/foot.liquid' %}
