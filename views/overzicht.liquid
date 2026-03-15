@@ -3,18 +3,54 @@
 <main>
   <section class="overview">
     <h1>Overzicht Instrumenten</h1>
-    
-    {% if instruments.size > 0 %}
-      <table class="instruments-table">
-        <thead>
-          <tr>
-            <th>Naam</th>
-            <th>Instrument</th>
-            <th>Status</th>
-            <th>Actie</th>
-          </tr>
-        </thead>
-        <tbody>
+
+    <table class="instruments-table">
+      <thead>
+        <tr>
+          <th>Naam</th>
+          <th>
+            <details class="table-filter">
+              <summary>Instrument{% if currentInstrument != '' %}: {{ currentInstrument }}{% endif %}</summary>
+              <ul class="table-filter-menu">
+                <li class="table-filter-item">
+                  <a href="/instruments?{% if currentStatus != '' %}status={{ currentStatus | url_encode }}&{% endif %}limit={{ currentLimit | default: '10' }}">
+                    Alle instrumenten
+                  </a>
+                </li>
+                {% for option in instrumentOptions %}
+                  <li class="table-filter-item">
+                    <a href="/instruments?instrument={{ option | url_encode }}{% if currentStatus != '' %}&status={{ currentStatus | url_encode }}{% endif %}&limit={{ currentLimit | default: '10' }}">
+                      {{ option }}
+                    </a>
+                  </li>
+                {% endfor %}
+              </ul>
+            </details>
+          </th>
+          <th>
+            <details class="table-filter">
+              <summary>Status{% if currentStatus != '' %}: {{ currentStatus }}{% endif %}</summary>
+              <ul class="table-filter-menu">
+                <li class="table-filter-item">
+                  <a href="/instruments?{% if currentInstrument != '' %}instrument={{ currentInstrument | url_encode }}&{% endif %}limit={{ currentLimit | default: '10' }}">
+                    Alle statussen
+                  </a>
+                </li>
+                {% for option in statusOptions %}
+                  <li class="table-filter-item">
+                    <a href="/instruments?status={{ option | url_encode }}{% if currentInstrument != '' %}&instrument={{ currentInstrument | url_encode }}{% endif %}&limit={{ currentLimit | default: '10' }}">
+                      {{ option }}
+                    </a>
+                  </li>
+                {% endfor %}
+              </ul>
+            </details>
+          </th>
+          <th>Actie</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% if instruments.size > 0 %}
           {% for instrument in instruments %}
             <tr>
               <td>{{ instrument.name | default: 'Onbekend' }}</td>
@@ -29,18 +65,20 @@
               </td>
             </tr>
           {% endfor %}
-        </tbody>
-      </table>
-      
-      {% if hasMore %}
-        <footer class="load-more">
-          <a href="/instruments?limit=all" class="btn btn-secondary">
-            Laat alles zien ({{ totalCount }} instrumenten)
-          </a>
-        </footer>
-      {% endif %}
-    {% else %}
-      <p>Geen instrumenten gevonden.</p>
+        {% else %}
+          <tr>
+            <td colspan="4">Geen instrumenten gevonden.</td>
+          </tr>
+        {% endif %}
+      </tbody>
+    </table>
+
+    {% if hasMore %}
+      <footer class="load-more">
+        <a href="/instruments?limit=all{% if currentInstrument != '' %}&instrument={{ currentInstrument | url_encode }}{% endif %}{% if currentStatus != '' %}&status={{ currentStatus | url_encode }}{% endif %}" class="btn btn-secondary">
+          Laat alles zien ({{ totalCount }} instrumenten)
+        </a>
+      </footer>
     {% endif %}
   </section>
 </main>

@@ -50,25 +50,43 @@ app.get('/', async function (request, response) {
 });
 
 app.get('/instruments', async function (request, response) {
-  const type = request.query.type;
-  const status = request.query.status;
-  
+  const currentInstrument = request.query.instrument || '';
+  const currentStatus = request.query.status || '';
   const limitParam = request.query.limit;
   const showAll = limitParam === 'all';
-  const limit = showAll ? Infinity : (parseInt(limitParam) || 10);
+  const parsedLimit = parseInt(limitParam, 10);
+  const limit = showAll ? Number.POSITIVE_INFINITY : (Number.isNaN(parsedLimit) ? 10 : parsedLimit);
 
   const allInstruments = await reqDATA('preludefonds_instruments');
-  const instruments = showAll ? allInstruments : allInstruments.slice(0, limit);
-  const hasMore = !showAll && allInstruments.length > limit;
-  const totalCount = allInstruments.length;
+  const instrumentOptions = [...new Set(allInstruments.map((item) => item.instrument).filter(Boolean))]
+    .sort((left, right) => left.localeCompare(right, 'nl'));
+
+  const statusOptions = ['Beschikbaar', 'Uitgeleend', 'Beschadigd', 'Onder onderhoud'];
+
+  const filteredInstruments = allInstruments.filter((item) => {
+    const instrumentMatch = currentInstrument ? item.instrument === currentInstrument : true;
+    const statusMatch = currentStatus ? item.status === currentStatus : true;
+    return instrumentMatch && statusMatch;
+  });
+
+  const visibleInstruments = [...filteredInstruments].sort((left, right) =>
+    (left.name || '').localeCompare(right.name || '', 'nl')
+  );
+
+  const instruments = visibleInstruments.slice(0, limit);
+  const hasMore = visibleInstruments.length > limit;
+  const totalCount = visibleInstruments.length;
 
   response.render('overzicht.liquid', {
     instruments,
-    type,
-    status,
     menuClass: 'overzicht',
     hasMore,
-    totalCount
+    totalCount,
+    instrumentOptions,
+    statusOptions,
+    currentInstrument,
+    currentStatus,
+    currentLimit: showAll ? 'all' : String(limit)
   });
 });
 

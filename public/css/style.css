@@ -166,6 +166,11 @@ textarea {
     color: #856404;
 }
 
+.status-beschadigd {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
 .status-onbekend {
     background-color: #e2e3e5;
     color: #6c757d;
@@ -288,6 +293,71 @@ dd {
 .instruments-table .btn {
     padding: 0.5rem 1rem;
     font-size: 0.875rem;
+}
+
+.table-filter {
+    position: relative;
+}
+
+.table-filter summary {
+    list-style: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.4rem 0.65rem;
+    border-radius: 8px;
+    transition: background-color 0.2s ease;
+    user-select: none;
+}
+
+.table-filter summary::-webkit-details-marker {
+    display: none;
+}
+
+.table-filter summary::after {
+    content: '▾';
+    font-size: 0.85rem;
+    opacity: 0.9;
+}
+
+.table-filter[open] summary,
+.table-filter summary:hover {
+    background-color: rgba(255, 255, 255, 0.16);
+}
+
+.table-filter-menu {
+    position: absolute;
+    top: calc(100% + 0.45rem);
+    left: 0;
+    z-index: 10;
+    min-width: 220px;
+    max-height: 260px;
+    overflow-y: auto;
+    margin: 0;
+    padding: 0.35rem;
+    list-style: none;
+    background: #fff;
+    border: 1px solid #e6e2ea;
+    border-radius: 10px;
+    box-shadow: 0 14px 28px rgba(40, 18, 56, 0.18);
+}
+
+.table-filter-item a {
+    display: block;
+    padding: 0.55rem 0.7rem;
+    border-radius: 8px;
+    color: #2f1b43;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.92rem;
+}
+
+.table-filter-item a:hover,
+.table-filter-item a:focus-visible {
+    background-color: #f4ecfb;
+    color: #46166B;
+    outline: none;
 }
 
 .load-more {
