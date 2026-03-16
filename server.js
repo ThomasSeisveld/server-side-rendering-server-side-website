@@ -52,10 +52,14 @@ app.get('/', async function (request, response) {
 app.get('/instruments', async function (request, response) {
   const currentInstrument = request.query.instrument || '';
   const currentStatus = request.query.status || '';
-  const limitParam = request.query.limit;
+  const limitParam = request.query.limit || '10';
   const showAll = limitParam === 'all';
-  const parsedLimit = parseInt(limitParam, 10);
-  const limit = showAll ? Number.POSITIVE_INFINITY : (Number.isNaN(parsedLimit) ? 10 : parsedLimit);
+
+  // - ?limit=all  -> alles laten zien
+  // - ?limit=20   -> 20 items laten zien
+  // - geen/ongeldige limit -> 10 items 
+  const parsedLimit = Number(limitParam);
+  const limit = !showAll && Number.isInteger(parsedLimit) && parsedLimit > 0 ? parsedLimit : 10;
 
   const allInstruments = await reqDATA('preludefonds_instruments');
   const instrumentOptions = [...new Set(allInstruments.map((item) => item.instrument).filter(Boolean))]
@@ -73,8 +77,8 @@ app.get('/instruments', async function (request, response) {
     (left.name || '').localeCompare(right.name || '', 'nl')
   );
 
-  const instruments = visibleInstruments.slice(0, limit);
-  const hasMore = visibleInstruments.length > limit;
+  const instruments = showAll ? visibleInstruments : visibleInstruments.slice(0, limit);
+  const hasMore = !showAll && visibleInstruments.length > limit;
   const totalCount = visibleInstruments.length;
 
   response.render('overzicht.liquid', {
